@@ -1,0 +1,27 @@
+@using Evote365.Core.Application.ViewModels.Dirigente.AlianzaPolitica
+@using Evote366.Core.Domain.Common.Enums
+@model ConfirmarAccionAlianzaViewModel
+@{
+    ViewData["Title"] = "Confirmar Rechazo";
+    Layout = "_LayoutDirigente";
+}
+
+<div class="confirm-card confirm-danger mt-4 text-center">
+    <div class="icon-wrap mx-auto">
+        <i class="bi bi-hand-thumbs-down"></i>
+    </div>
+    <h2>¿Rechazar solicitud de alianza?</h2>
+    <p class="confirm-copy">¿Desea rechazar la solicitud enviada por <strong>@Model.NombrePartido (@Model.SiglasPartido)</strong>?</p>
+
+    <form asp-action="ConfirmarRechazo" method="post">
+        <input type="hidden" asp-for="SolicitudId" />
+        <div class="form-actions justify-content-center">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle me-2"></i>Cancelar
+            </a>
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-x-circle me-2"></i>Rechazar
+            </button>
+        </div>
+    </form>
+</div>

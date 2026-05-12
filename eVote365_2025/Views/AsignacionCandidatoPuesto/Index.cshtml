@@ -1,0 +1,82 @@
+@using Evote365.Core.Application.ViewModels.Dirigente.Asignacion
+@model List<RelacionCandidatoPuestoViewModel>
+
+@{
+    Layout = "~/Views/Shared/_LayoutDirigente.cshtml";
+    ViewData["Title"] = "Asignación de Candidatos a Puestos";
+    var eleccionActiva = ViewBag.EleccionActiva as bool? ?? false;
+}
+
+<div class="page-panel mt-4">
+    <div class="page-hero">
+        <div>
+            <h2>Asignación de Candidatos a Puestos</h2>
+            <p>Administre las postulaciones oficiales de su organización política.</p>
+        </div>
+        @if (!eleccionActiva)
+        {
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-2"></i>Agregar nueva relación
+            </a>
+        }
+    </div>
+
+    @if (eleccionActiva)
+    {
+        <div class="alert alert-warning">
+            No se pueden agregar ni eliminar relaciones mientras haya una elección activa.
+        </div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="page-empty">No hay candidatos asignados a puestos en este momento.</div>
+    }
+    else
+    {
+        <div class="page-table">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Partido</th>
+                            <th>Puesto</th>
+                            <th>Asignado el</th>
+                            <th style="width: 140px;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OrderBy(m => m.NombrePuesto).ThenBy(m => m.NombreCompleto))
+                        {
+                            <tr>
+                                <td>@item.NombreCompleto</td>
+                                <td>
+                                    @item.PartidoSiglas
+                                    @if (item.EsAliado)
+                                    {
+                                        <span class="pill-badge ms-2"><i class="bi bi-people-fill"></i>Aliado</span>
+                                    }
+                                </td>
+                                <td>@item.NombrePuesto</td>
+                                <td>@item.FechaAsignacion.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    @if (item.PuedeEliminar)
+                                    {
+                                        <a asp-action="ConfirmarDesvinculacion" asp-route-id="@item.CandidatoId" class="btn btn-danger btn-sm" title="Eliminar relación">
+                                            <i class="bi bi-trash me-1"></i>Eliminar
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Bloqueado</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,70 @@
+@using Evote365.Core.Application.ViewModels.Administrador.AsignacionPartido
+@using Evote366.Core.Domain.Common.Enums
+@model SaveAsignacionViewModel
+
+@{
+    ViewData["Title"] = "Asignar Dirigente a Partido";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="form-shell mt-4">
+    <div class="form-card">
+        <div class="page-hero mb-4">
+            <div>
+                <h2>@ViewData["Title"]</h2>
+                <p class="form-intro">Vincule un dirigente político activo con un partido habilitado.</p>
+            </div>
+        </div>
+
+        <form asp-action="Create" method="post">
+            <div class="form-group mb-3">
+                <label class="form-label">Dirigente Político</label>
+
+                @if (!Model.DirigentesDisponibles?.Any() ?? true)
+                {
+                    <div class="alert alert-warning">
+                        No hay dirigentes disponibles para asignar. Verifique que estén activos y no asignados.
+                    </div>
+                }
+
+                <select asp-for="UsuarioId"
+                        asp-items="@(Model.DirigentesDisponibles?.Select(d => new SelectListItem { Value = d.Value.ToString(), Text = d.Text }))"
+                        class="form-select">
+                </select>
+                <span asp-validation-for="UsuarioId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">Partido Político</label>
+
+                @if (!Model.PartidosDisponibles?.Any() ?? true)
+                {
+                    <div class="alert alert-warning">
+                        No hay partidos políticos activos disponibles. Verifique que estén habilitados.
+                    </div>
+                }
+
+                <select asp-for="PartidoPoliticoId"
+                        asp-items="@(Model.PartidosDisponibles?.Select(p => new SelectListItem { Value = p.Value.ToString(), Text = p.Text }))"
+                        class="form-select">
+                </select>
+                <span asp-validation-for="PartidoPoliticoId" class="text-danger"></span>
+            </div>
+
+            <div class="form-actions">
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left-circle me-2"></i>Volver
+                </a>
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-link-45deg me-2"></i>Crear relación
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

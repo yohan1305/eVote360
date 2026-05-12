@@ -1,0 +1,61 @@
+@using Evote365.Core.Application.ViewModels.Elector;
+@model List<PuestoResumenViewModel>
+
+@{
+    ViewData["Title"] = "Puestos Disponibles";
+    Layout = "~/Views/Shared/_LayoutElector.cshtml";
+}
+
+<div class="page-panel mt-4">
+    <div class="page-hero">
+        <div>
+            <h2>Puestos Disponibles para Votar</h2>
+            <p>Seleccione cada posición electoral y complete su voto paso a paso.</p>
+        </div>
+        <a asp-action="FinalizarVotacion"
+           asp-route-cedula="@ViewBag.Cedula"
+           class="btn btn-success">
+            <i class="bi bi-check2-circle me-2"></i>Finalizar votación
+        </a>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(ViewBag.MensajePendientes as string))
+    {
+        <div class="alert alert-warning">@ViewBag.MensajePendientes</div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="page-empty">No hay puestos disponibles para esta elección.</div>
+    }
+    else
+    {
+        <div class="choice-grid">
+            @foreach (var puesto in Model)
+            {
+                <div class="choice-card">
+                    <div class="d-flex justify-content-between gap-3 align-items-start">
+                        <div>
+                            <h5 class="mb-1">@puesto.NombrePuesto</h5>
+                            <p class="text-muted mb-3">@puesto.CantidadCandidatosReales candidatos, @puesto.CantidadPartidos partidos</p>
+                        </div>
+                        @if (puesto.YaVotado)
+                        {
+                            <span class="pill-badge"><i class="bi bi-check2-all"></i>Ya votó</span>
+                        }
+                    </div>
+
+                    @if (!puesto.YaVotado)
+                    {
+                        <a asp-action="SeleccionarCandidato"
+                           asp-route-puestoId="@puesto.PuestoId"
+                           asp-route-cedula="@ViewBag.Cedula"
+                           class="btn btn-primary">
+                            <i class="bi bi-hand-index-thumb me-2"></i>Votar
+                        </a>
+                    }
+                </div>
+            }
+        </div>
+    }
+</div>

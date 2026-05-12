@@ -1,0 +1,27 @@
+@using Evote365.Core.Application.ViewModels.Administrador.Eleccion
+@model ConfirmarFinalizacionViewModel
+
+@{
+    Layout = "AdminLayout";
+    ViewData["Title"] = "Confirmar Finalización";
+}
+
+<div class="confirm-card confirm-danger mt-4 text-center">
+    <div class="icon-wrap mx-auto">
+        <i class="bi bi-stop-circle"></i>
+    </div>
+    <h2>Confirmar Finalización de Elección</h2>
+    <p class="confirm-copy">Va a finalizar la elección <strong>@Model.NombreEleccion</strong> del <strong>@Model.FechaRealizacion.ToShortDateString()</strong>. Después de esto no se podrán emitir más votos y se habilitarán los resultados.</p>
+
+    <form asp-action="Finalizar" method="post">
+        <input type="hidden" asp-for="EleccionId" />
+        <div class="form-actions justify-content-center">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle me-2"></i>Cancelar
+            </a>
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-check2-circle me-2"></i>Finalizar Elección
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,114 @@
+.admin-shell .shell-backdrop {
+  background-image:
+    linear-gradient(120deg, rgba(8, 24, 42, 0.78), rgba(24, 77, 124, 0.45)),
+    url("https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1600&q=80");
+}
+
+.admin-navbar {
+  background: rgba(8, 20, 36, 0.78);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-navbar .nav-link {
+  color: rgba(255, 255, 255, 0.82) !important;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 0.55rem 0.9rem !important;
+}
+
+.admin-navbar .nav-link:hover,
+.admin-navbar .nav-link:focus {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.btn-admin-ghost {
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.btn-admin-ghost:hover {
+  color: #0d2238;
+  background: #fff;
+}
+
+.admin-shell .container > h1,
+.admin-shell .container > h2,
+.admin-shell .container > h3,
+.admin-shell .container > .row > .text-center > h1,
+.admin-shell .container > .row > .text-center > h2 {
+  color: #fff;
+  font-weight: 800;
+  margin-bottom: 1.25rem;
+}
+
+.admin-shell .container > .row,
+.admin-shell .container > .mt-4,
+.admin-shell .container > .table,
+.admin-shell .container > .card,
+.admin-shell .container > form,
+.admin-shell .container > .page-panel {
+  position: relative;
+}
+
+.admin-shell .table,
+.admin-shell .card,
+.admin-shell form:not(.navbar-form),
+.admin-shell .container > .alert,
+.admin-shell .container > .row > .col-12,
+.admin-shell .container > .row > [class*="col-md"],
+.admin-shell .container > .row > [class*="col-lg"] {
+  color: #132238;
+}
+
+.admin-shell .table {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(17, 40, 69, 0.08);
+  overflow: hidden;
+}
+
+.admin-shell .table thead th {
+  background: #f2f7fb;
+  color: #526579;
+}
+
+.admin-shell .table tbody tr:hover {
+  background: rgba(44, 126, 255, 0.04);
+}
+
+.admin-shell .card,
+.admin-shell form,
+.admin-shell .page-panel,
+.admin-shell .container > .alert,
+.admin-shell .container > .row > .col-md-6 > .card,
+.admin-shell .container > .row > .col-md-4 > .card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+}
+
+.admin-shell .card {
+  border-radius: 24px;
+}
+
+.admin-shell .card-title {
+  font-weight: 800;
+  color: #10233a;
+}
+
+.admin-shell .display-4,
+.admin-shell .display-6 {
+  font-weight: 800;
+}
+
+.admin-shell .btn-outline-warning,
+.admin-shell .btn-outline-danger,
+.admin-shell .btn-outline-secondary,
+.admin-shell .btn-outline-success {
+  background: #fff;
+}
+
+.admin-shell img {
+  border-radius: 16px;
+}

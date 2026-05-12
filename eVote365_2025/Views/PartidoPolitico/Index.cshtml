@@ -1,0 +1,77 @@
+﻿@using Evote365.Core.Application.ViewModels.Administrador.PartidoPolitico
+@using Evote366.Core.Domain.Common.Enums
+@model List<PartidoPoliticoViewModel>
+@{
+    Layout = "AdminLayout";
+    ViewData["Title"] = "Partidos Políticos";
+}
+
+<section class="page-panel">
+    <div class="page-hero">
+        <div>
+            <h2>Partidos Políticos</h2>
+            <p>Administra identidad visual, siglas y estado de cada partido.</p>
+        </div>
+    </div>
+
+    @if (ViewBag.CanModify == true)
+    {
+        <a class="btn btn-primary mb-3" asp-controller="PartidoPolitico" asp-action="Create">Crear nuevo partido</a>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="page-empty">No hay partidos registrados.</div>
+    }
+    else
+    {
+        <div class="page-table">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Logo</th>
+                        <th>Nombre</th>
+                        <th>Siglas</th>
+                        <th>Descripción</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var partido in Model)
+                    {
+                        <tr>
+                            <td><img src="@partido.LogoUrl" alt="Logo" width="60" height="60" /></td>
+                            <td>@partido.Nombre</td>
+                            <td>@partido.Siglas</td>
+                            <td>@partido.Descripcion</td>
+                            <td>@partido.Estado</td>
+                            <td>
+                                @if (ViewBag.CanModify == true)
+                                {
+                                    <div class="action-stack">
+                                        <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@partido.Id">
+                                            <i class="bi bi-pencil-square"></i> Editar
+                                        </a>
+                                        @if (partido.Estado == EstadoEntidad.Activo)
+                                        {
+                                            <a class="btn btn-sm btn-danger" asp-action="ToggleEstado" asp-route-id="@partido.Id">
+                                                <i class="bi bi-x-circle-fill"></i> Desactivar
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-sm btn-success" asp-action="ToggleEstado" asp-route-id="@partido.Id">
+                                                <i class="bi bi-check-circle-fill"></i> Activar
+                                            </a>
+                                        }
+                                    </div>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</section>

@@ -1,0 +1,121 @@
+﻿@using Evote365.Core.Application.ViewModels.Dirigente.AlianzaPolitica
+@using Evote366.Core.Domain.Common.Enums
+@model AlianzasPoliticasIndexViewModel
+@{
+    ViewData["Title"] = "Alianzas Políticas";
+    Layout = "_LayoutDirigente";
+}
+
+<section class="page-panel">
+<div class="page-hero">
+    <div>
+        <h2>Alianzas Políticas</h2>
+        <p>Administra solicitudes, respuestas y acuerdos vigentes entre partidos.</p>
+    </div>
+</div>
+
+<div class="mb-4">
+    <a asp-action="Crear" class="btn btn-primary">Crear nueva solicitud</a>
+</div>
+
+<!-- 🔹 Solicitudes Recibidas -->
+<h4>Solicitudes Recibidas</h4>
+@if (Model.SolicitudesRecibidas.Any())
+{
+    <div class="page-table"><table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Partido</th>
+                <th>Siglas</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.SolicitudesRecibidas)
+            {
+                <tr>
+                    <td>@item.NombrePartidoSolicitante</td>
+                    <td>@item.SiglasPartidoSolicitante</td>
+                    <td>@item.FechaSolicitud.ToShortDateString()</td>
+                    <td>
+                        <a asp-action="ConfirmarAceptar" asp-route-id="@item.Id" class="btn btn-success btn-sm">Aceptar</a>
+                        <a asp-action="ConfirmarRechazo" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Rechazar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table></div>
+}
+else
+{
+    <div class="page-empty">No hay solicitudes recibidas.</div>
+}
+
+<!-- 🔹 Solicitudes Enviadas -->
+<h4>Solicitudes Enviadas</h4>
+@if (Model.SolicitudesEnviadas.Any())
+{
+    <div class="page-table"><table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Partido</th>
+                <th>Siglas</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.SolicitudesEnviadas)
+            {
+                <tr>
+                    <td>@item.NombrePartidoReceptor</td>
+                    <td>@item.SiglasPartidoReceptor</td>
+                    <td>@item.FechaSolicitud.ToShortDateString()</td>
+                    <td>@item.Estado.ToString()</td>
+                    <td>
+                        @if (item.Estado == EstadoAlianza.EnEspera)
+                        {
+                            <a asp-action="ConfirmarEliminar" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Eliminar</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table></div>
+}
+else
+{
+    <div class="page-empty">No hay solicitudes enviadas.</div>
+}
+
+<!-- 🔹 Alianzas Vigentes -->
+<h4>Alianzas Vigentes</h4>
+@if (Model.AlianzasVigentes.Any())
+{
+    <div class="page-table"><table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Partido Aliado</th>
+                <th>Siglas</th>
+                <th>Fecha Aceptación</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AlianzasVigentes)
+            {
+                <tr>
+                    <td>@item.NombrePartidoAliado</td>
+                    <td>@item.SiglasPartidoAliado</td>
+                    <td>@item.FechaAceptacion.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table></div>
+}
+else
+{
+    <div class="page-empty">No hay alianzas vigentes.</div>
+}
+</section>

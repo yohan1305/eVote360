@@ -1,0 +1,27 @@
+@using Evote365.Core.Application.ViewModels.Administrador.PartidoPolitico
+@using Evote366.Core.Domain.Common.Enums
+@model ToggleEstadoPartidoViewModel
+@{
+    Layout = "AdminLayout";
+    ViewData["Title"] = Model.EstadoActual == EstadoEntidad.Activo ? "Desactivar Partido" : "Activar Partido";
+}
+
+<div class="confirm-card confirm-danger mt-4 text-center">
+    <div class="icon-wrap mx-auto">
+        <i class="bi bi-flag-fill"></i>
+    </div>
+    <h2>@ViewData["Title"]</h2>
+    <p class="confirm-copy">Está a punto de cambiar el estado del partido <strong>@Model.Nombre</strong>. Esto puede afectar asignaciones y disponibilidad dentro del proceso electoral.</p>
+
+    <form asp-action="ToggleEstado" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div class="form-actions justify-content-center">
+            <a class="btn btn-secondary" asp-action="Index">
+                <i class="bi bi-arrow-left-circle me-2"></i>Cancelar
+            </a>
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-shield-exclamation me-2"></i>Confirmar
+            </button>
+        </div>
+    </form>
+</div>

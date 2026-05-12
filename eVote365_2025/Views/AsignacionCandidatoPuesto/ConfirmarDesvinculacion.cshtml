@@ -1,0 +1,32 @@
+@using Evote365.Core.Application.ViewModels.Dirigente.Asignacion
+@model ConfirmarDesvinculacionViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutDirigente.cshtml";
+    ViewData["Title"] = "Confirmar Desvinculación";
+}
+
+<div class="confirm-card confirm-danger mt-4 text-center">
+    <div class="icon-wrap mx-auto">
+        <i class="bi bi-person-dash"></i>
+    </div>
+    <h2>Confirmar Desvinculación</h2>
+    <p class="confirm-copy">Está por retirar una asignación oficial de la boleta.</p>
+    <div class="alert alert-light text-start">
+        <p class="mb-2"><strong>Candidato:</strong> @Model.NombreCompleto</p>
+        <p class="mb-0"><strong>Puesto asignado:</strong> @Model.NombrePuesto</p>
+    </div>
+
+    <form asp-action="DeleteConfirmed" method="post">
+        <input type="hidden" asp-for="CandidatoId" />
+
+        <div class="form-actions justify-content-center">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle me-2"></i>Cancelar
+            </a>
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-trash me-2"></i>Confirmar desvinculación
+            </button>
+        </div>
+    </form>
+</div>

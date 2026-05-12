@@ -1,0 +1,48 @@
+@model SaveCandidatoViewModel
+@using Evote365.Core.Application.ViewModels.Dirigente.Candidato
+@using Microsoft.AspNetCore.Mvc.Rendering
+@{
+    Layout = "~/Views/Shared/_LayoutDirigente.cshtml";
+    ViewData["Title"] = Model.EsEdicion ? "Editar Candidato" : "Crear Candidato";
+}
+
+<div class="form-shell mt-4">
+    <div class="form-card">
+        <div class="page-hero mb-4">
+            <div>
+                <h2>@ViewData["Title"]</h2>
+                <p class="form-intro">Registre al candidato y cargue su fotografía oficial para la boleta.</p>
+            </div>
+        </div>
+
+        <form asp-action="@(Model.EsEdicion ? "Editar" : "Crear")" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Candidato.Id" />
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="Candidato.Nombre" class="form-label"></label>
+                    <input asp-for="Candidato.Nombre" class="form-control" />
+                    <span asp-validation-for="Candidato.Nombre" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Candidato.Apellido" class="form-label"></label>
+                    <input asp-for="Candidato.Apellido" class="form-control" />
+                    <span asp-validation-for="Candidato.Apellido" class="text-danger"></span>
+                </div>
+                <div class="col-12">
+                    <label asp-for="Candidato.Foto" class="form-label"></label>
+                    <input asp-for="Candidato.Foto" type="file" class="form-control" />
+                    <span asp-validation-for="Candidato.Foto" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left-circle me-2"></i>Cancelar
+                </a>
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-save me-2"></i>Guardar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

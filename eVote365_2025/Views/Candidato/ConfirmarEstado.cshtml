@@ -1,0 +1,28 @@
+@model ConfirmarCambioEstadoCandidatoViewModel
+@using Evote365.Core.Application.ViewModels.Dirigente.Candidato
+@{
+    Layout = "~/Views/Shared/_LayoutDirigente.cshtml";
+    ViewData["Title"] = "Confirmar cambio de estado";
+}
+
+<div class="confirm-card confirm-danger mt-4 text-center">
+    <div class="icon-wrap mx-auto">
+        <i class="bi bi-person-badge"></i>
+    </div>
+    <h2>@ViewData["Title"]</h2>
+    <p class="confirm-copy">@Model.Mensaje</p>
+    <p class="fw-bold mb-0">@Model.Candidato.NombreCompleto</p>
+
+    <form asp-action="CambiarEstado" method="post">
+        <input type="hidden" asp-for="Candidato.Id" />
+        <input type="hidden" asp-for="Candidato.Activar" />
+        <div class="form-actions justify-content-center">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle me-2"></i>Cancelar
+            </a>
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-check-circle me-2"></i>Sí, confirmar
+            </button>
+        </div>
+    </form>
+</div>

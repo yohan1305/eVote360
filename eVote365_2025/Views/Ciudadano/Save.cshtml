@@ -1,0 +1,56 @@
+@using Evote365.Core.Application.ViewModels.Administrador.Ciudadano
+@model SaveCiudadanoViewModel
+@{
+    Layout = "AdminLayout";
+    ViewData["Title"] = Model.Id == 0 ? "Crear Ciudadano" : "Editar Ciudadano";
+}
+
+<div class="form-shell mt-4">
+    <div class="form-card">
+        <div class="page-hero mb-4">
+            <div>
+                <h2>@ViewData["Title"]</h2>
+                <p class="form-intro">Complete la información del ciudadano para mantener actualizado el padrón electoral.</p>
+            </div>
+        </div>
+
+        <form asp-action="@(Model.Id == 0 ? "Create" : "Edit")">
+            <input type="hidden" asp-for="Id" />
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="Nombre" class="form-label"></label>
+                    <input asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Apellido" class="form-label"></label>
+                    <input asp-for="Apellido" class="form-control" />
+                    <span asp-validation-for="Apellido" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="DocumentoIdentidad" class="form-label"></label>
+                    <input asp-for="DocumentoIdentidad" class="form-control" />
+                    <span asp-validation-for="DocumentoIdentidad" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left-circle me-2"></i>Volver
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-floppy me-2"></i>Guardar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

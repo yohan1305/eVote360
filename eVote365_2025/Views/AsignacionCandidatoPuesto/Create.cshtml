@@ -1,0 +1,95 @@
+@using Evote365.Core.Application.ViewModels.Dirigente.Asignacion
+@model AsignacionCandidatoPuestoViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutDirigente.cshtml";
+    ViewData["Title"] = "Asignar Candidato a Puesto";
+}
+
+<div class="form-shell mt-4">
+    <div class="form-card">
+        <div class="page-hero mb-4">
+            <div>
+                <h2>Asignar Candidato a Puesto</h2>
+                <p class="form-intro">Vincule un candidato elegible con un puesto disponible dentro de su organización.</p>
+            </div>
+        </div>
+
+        <div class="summary-grid mb-4">
+            <div class="metric-card">
+                <div class="metric-label">Candidatos</div>
+                <div class="metric-value">@Model.CandidatosDisponibles.Count</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Puestos Libres</div>
+                <div class="metric-value">@Model.PuestosDisponibles.Count</div>
+            </div>
+        </div>
+
+        @if ((Model.CandidatosDisponibles?.Count ?? 0) == 0 || (Model.PuestosDisponibles?.Count ?? 0) == 0)
+        {
+            <div class="alert alert-warning">
+                No hay candidatos o puestos disponibles para asignar en este momento.
+            </div>
+        }
+        else
+        {
+            <form asp-action="Create" method="post">
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+                <div class="form-group mb-3">
+                    <label asp-for="CandidatoIdSeleccionado" class="form-label">Candidato</label>
+                    <select asp-for="CandidatoIdSeleccionado" class="form-select"
+                            asp-items="@(Model.CandidatosDisponibles != null
+                                ? Model.CandidatosDisponibles.Select(c => new SelectListItem {
+                                    Value = c.Id.ToString(),
+                                    Text = $"{c.NombreCompleto} - {c.PartidoSiglas}" +
+                                           (c.EsAliado ? " [Aliado]" : "") +
+                                           (c.YaTienePuesto ? $" (Aspira a: {c.NombrePuestoActual})" : "")
+                                }).ToList()
+                                : new List<SelectListItem>())">
+                        <option value="">-- Seleccione un candidato --</option>
+                    </select>
+                    <span asp-validation-for="CandidatoIdSeleccionado" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="PuestoIdSeleccionado" class="form-label">Puesto Electivo</label>
+                    <select asp-for="PuestoIdSeleccionado" class="form-select"
+                            asp-items="@(Model.PuestosDisponibles != null
+                                ? Model.PuestosDisponibles.Select(p => new SelectListItem {
+                                    Value = p.Id.ToString(),
+                                    Text = p.Nombre
+                                }).ToList()
+                                : new List<SelectListItem>())">
+                        <option value="">-- Seleccione un puesto --</option>
+                    </select>
+                    <span asp-validation-for="PuestoIdSeleccionado" class="text-danger"></span>
+                </div>
+
+                <div class="form-actions">
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left-circle me-2"></i>Volver
+                    </a>
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-check-circle me-2"></i>Crear relación
+                    </button>
+                </div>
+            </form>
+        }
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.MensajeError))
+{
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'No se pudo crear la relación',
+            text: '@Model.MensajeError'
+        });
+    </script>
+}
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

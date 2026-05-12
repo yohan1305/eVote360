@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="9.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Tesseract" Version="4.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Evote365.Core.Application\Evote365.Core.Application.csproj" />
+    <ProjectReference Include="..\Evote365.Infrastructure.Persistence\Evote365.Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="..\Evote365.Infrastructure.Shared\Evote365.Infrastructure.Shared.csproj" />
+    <ProjectReference Include="..\Evote366.Core.Domain\Evote366.Core.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

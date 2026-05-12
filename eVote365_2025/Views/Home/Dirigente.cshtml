@@ -1,0 +1,40 @@
+@using Evote365.Core.Application.ViewModels.Home
+@model DirigenteHomeViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutDirigente.cshtml";
+    ViewData["Title"] = "Home Dirigente";
+}
+
+<div class="page-panel mt-4">
+    <div class="d-flex flex-column flex-md-row align-items-md-center gap-4 mb-4">
+        @if (!string.IsNullOrWhiteSpace(Model.LogoUrl))
+        {
+            <img src="@Model.LogoUrl" alt="@Model.SiglasPartido" class="brand-mark" />
+        }
+        <div>
+            <h2 class="mb-1">@Model.NombrePartido</h2>
+            <p class="text-muted mb-0">Panel de control para @Model.SiglasPartido</p>
+        </div>
+    </div>
+
+    <div class="summary-grid">
+        <div class="metric-card">
+            <div class="metric-label">Candidatos Activos</div>
+            <div class="metric-value">@Model.CandidatosActivos</div>
+            <small class="text-muted">Inactivos: @Model.CandidatosInactivos</small>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Alianzas Vigentes</div>
+            <div class="metric-value">@Model.CantidadAlianzasVigentes</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Solicitudes Pendientes</div>
+            <div class="metric-value">@Model.CantidadSolicitudesPendientes</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Candidatos Asignados</div>
+            <div class="metric-value">@Model.CandidatosAsignadosAPuesto</div>
+        </div>
+    </div>
+</div>

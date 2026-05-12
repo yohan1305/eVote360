@@ -1,0 +1,45 @@
+﻿@using Evote365.Core.Application.ViewModels.Elector
+@model VerificarCedulaViewModel
+
+@{
+    ViewData["Title"] = "Verificar Cédula";
+    Layout = "~/Views/Shared/_LayoutElector.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+        <div class="card shadow-sm border-0 mt-4">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Verificación de Identidad</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="VerificarCedula" method="post" novalidate>
+                    <div class="form-group mb-3">
+                        <label asp-for="DocumentoIdentidad" class="form-label">Cédula</label>
+                        <input asp-for="DocumentoIdentidad" class="form-control" placeholder="Ej. 001-1234567-1 o 00112345671" />
+                        <span asp-validation-for="DocumentoIdentidad" class="text-danger small"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100 py-3">Continuar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    @if (!string.IsNullOrEmpty(Model.MensajeError))
+    {
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Validación',
+                text: '@Model.MensajeError'
+            });
+        </script>
+    }
+}

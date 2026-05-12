@@ -1,0 +1,77 @@
+﻿@using Evote365.Core.Application.ViewModels.Administrador.Ciudadano
+@using Evote366.Core.Domain.Common.Enums
+@model List<CiudadanoViewModel>
+@{
+    Layout = "AdminLayout";
+    ViewData["Title"] = "Ciudadanos";
+}
+
+<section class="page-panel">
+    <div class="page-hero">
+        <div>
+            <h2>Ciudadanos</h2>
+            <p>Gestiona el padrón electoral y el estado de cada ciudadano.</p>
+        </div>
+    </div>
+
+    @if (ViewBag.CanModify == true)
+    {
+        <a class="btn btn-primary mb-3" asp-action="Create">Crear nuevo ciudadano</a>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="page-empty">No hay ciudadanos registrados.</div>
+    }
+    else
+    {
+        <div class="page-table">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                        <th>Documento</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var c in Model)
+                    {
+                        <tr>
+                            <td>@c.Nombre</td>
+                            <td>@c.Apellido</td>
+                            <td>@c.Email</td>
+                            <td>@c.DocumentoIdentidad</td>
+                            <td>@c.Estado</td>
+                            <td>
+                                @if (ViewBag.CanModify == true)
+                                {
+                                    <div class="action-stack">
+                                        <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@c.Id">
+                                            <i class="bi bi-pencil-square"></i> Editar
+                                        </a>
+                                        @if (c.Estado == EstadoEntidad.Activo)
+                                        {
+                                            <a class="btn btn-sm btn-danger" asp-action="ToggleEstado" asp-route-id="@c.Id">
+                                                <i class="bi bi-x-circle-fill"></i> Desactivar
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-sm btn-success" asp-action="ToggleEstado" asp-route-id="@c.Id">
+                                                <i class="bi bi-check-circle-fill"></i> Activar
+                                            </a>
+                                        }
+                                    </div>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</section>

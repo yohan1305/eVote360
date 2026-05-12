@@ -1,0 +1,28 @@
+@using Evote365.Core.Application.ViewModels.Administrador.AsignacionPartido
+@using Evote366.Core.Domain.Common.Enums
+@model ConfirmarDesvinculacionViewModel
+
+@{
+    ViewData["Title"] = "Confirmar Desvinculación";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="confirm-card confirm-danger mt-4 text-center">
+    <div class="icon-wrap mx-auto">
+        <i class="bi bi-person-x"></i>
+    </div>
+    <h2>@ViewData["Title"]</h2>
+    <p class="confirm-copy">Va a desvincular al dirigente <strong>@Model.NombreUsuario</strong> del partido <strong>@Model.SiglasPartido</strong>.</p>
+
+    <form asp-action="Desvincular" method="post">
+        <input type="hidden" asp-for="RelacionId" />
+        <div class="form-actions justify-content-center">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle me-2"></i>Cancelar
+            </a>
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-shield-exclamation me-2"></i>Aceptar
+            </button>
+        </div>
+    </form>
+</div>

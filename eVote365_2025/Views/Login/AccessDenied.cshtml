@@ -1,0 +1,17 @@
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Acceso denegado";
+}
+
+<div class="confirm-card confirm-danger mt-5 text-center">
+    <div class="icon-wrap mx-auto">
+        <i class="bi bi-lock-fill"></i>
+    </div>
+    <h2>Acceso denegado</h2>
+    <p class="confirm-copy">No tiene permisos para acceder a esta sección del sistema. Verifique que haya iniciado sesión con el rol correcto.</p>
+    <div class="form-actions justify-content-center">
+        <a href="@Url.Action("Index", "Login")" class="btn btn-primary">
+            <i class="bi bi-box-arrow-in-right me-2"></i>Volver al inicio de sesión
+        </a>
+    </div>
+</div>

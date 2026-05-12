@@ -1,0 +1,49 @@
+@using Evote365.Core.Application.ViewModels.Elector
+@model FinalizarVotacionViewModel
+
+@{
+    ViewData["Title"] = "Votación Finalizada";
+    Layout = "~/Views/Shared/_LayoutElector.cshtml";
+}
+
+<div class="page-panel mt-4">
+    <div class="page-hero">
+        <div>
+            <h2>Proceso completado</h2>
+            <p>Su participación quedó registrada y aquí puede ver el resumen final.</p>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.Mensaje))
+    {
+        <div class="alert alert-success">@Model.Mensaje</div>
+    }
+
+    <div class="page-table mb-4">
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>Puesto</th>
+                        <th>Candidato</th>
+                        <th>Partido</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var voto in Model.ResumenVotos)
+                    {
+                        <tr>
+                            <td>@voto.Puesto</td>
+                            <td>@voto.Candidato</td>
+                            <td>@voto.Partido</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <a asp-action="VerificarCedula" class="btn btn-primary">
+        <i class="bi bi-house-door me-2"></i>Volver al inicio
+    </a>
+</div>

@@ -1,0 +1,82 @@
+﻿@using Evote365.Core.Application.ViewModels.Administrador.Usuario
+@using Evote366.Core.Domain.Common.Enums
+@model List<UsuarioViewModel>
+
+@{
+
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+
+    ViewData["Title"] = "Listados de usuarios";
+}
+<section class="page-panel">
+    <div class="page-hero">
+        <div>
+            <h2>Usuarios del sistema</h2>
+            <p>Gestiona acceso, roles y disponibilidad de cuentas internas.</p>
+        </div>
+    </div>
+
+    <a asp-action="Create" class="btn btn-primary mb-3">Crear nuevo usuario</a>
+
+    <div class="page-table">
+        <table class="table table-bordered mt-0">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Usuario</th>
+                    <th>Rol</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var u in Model)
+                {
+                    <tr>
+                        <td>@u.Nombre</td>
+                        <td>@u.Apellido</td>
+                        <td>@u.Email</td>
+                        <td>@u.NombreUsuario</td>
+                        <td>@u.Rol</td>
+                        <td>@u.Estado</td>
+                        <td>
+                            <div class="action-stack">
+                                <a asp-action="Edit" asp-route-id="@u.Id" class="btn btn-sm btn-warning">
+                                    <i class="bi bi-pencil-square"></i> Editar
+                                </a>
+
+                                @if (u.Estado == EstadoEntidad.Activo)
+                                {
+                                    <a asp-action="Desactivar" asp-route-id="@u.Id" class="btn btn-sm btn-danger">
+                                        <i class="bi bi-person-x-fill"></i> Desactivar
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-action="Activar" asp-route-id="@u.Id" class="btn btn-sm btn-success">
+                                        <i class="bi bi-person-check-fill"></i> Activar
+                                    </a>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
+
+@section Scripts {
+    @if (TempData["Error"] != null)
+    {
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Operación no completada',
+                text: '@TempData["Error"]'
+            });
+        </script>
+    }
+}

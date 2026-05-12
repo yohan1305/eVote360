@@ -1,0 +1,77 @@
+@using Evote365.Core.Application.ViewModels.Administrador.Eleccion
+@using Evote366.Core.Domain.Common.Enums
+@model EleccionListadoViewModel
+
+@{
+    Layout = "AdminLayout";
+    ViewData["Title"] = "Listado de Elecciones";
+}
+
+<div class="page-panel mt-4">
+    <div class="page-hero">
+        <div>
+            <h2>Listado de Elecciones</h2>
+            <p>Administre procesos abiertos, históricos y resultados desde un solo lugar.</p>
+        </div>
+        @if (!Model.HayEleccionActiva)
+        {
+            <a asp-action="Crear" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-2"></i>Iniciar nuevo proceso electivo
+            </a>
+        }
+    </div>
+
+    <div class="page-table">
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Partidos</th>
+                        <th>Puestos</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var eleccion in Model.Elecciones)
+                    {
+                        <tr class="@(eleccion.Estado == EstadoEleccion.EnProceso ? "table-warning" : "")">
+                            <td>@eleccion.Nombre</td>
+                            <td>@eleccion.FechaRealizacion.ToShortDateString()</td>
+                            <td>
+                                @if (eleccion.Estado == EstadoEleccion.EnProceso)
+                                {
+                                    <span class="pill-badge"><i class="bi bi-broadcast-pin"></i>Activa</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">@eleccion.Estado</span>
+                                }
+                            </td>
+                            <td>@eleccion.CantidadPartidos</td>
+                            <td>@eleccion.CantidadPuestos</td>
+                            <td>
+                                <div class="action-stack">
+                                    @if (eleccion.Estado == EstadoEleccion.EnProceso)
+                                    {
+                                        <a asp-action="ConfirmarFinalizacion" asp-route-id="@eleccion.Id" class="btn btn-warning">
+                                            <i class="bi bi-stop-circle me-2"></i>Finalizar
+                                        </a>
+                                    }
+                                    else if (eleccion.Estado == EstadoEleccion.Finalizada)
+                                    {
+                                        <a asp-action="Resultados" asp-route-id="@eleccion.Id" class="btn btn-info">
+                                            <i class="bi bi-bar-chart-line me-2"></i>Ver Resultados
+                                        </a>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

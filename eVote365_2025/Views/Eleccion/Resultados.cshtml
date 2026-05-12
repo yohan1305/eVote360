@@ -1,0 +1,52 @@
+@using Evote365.Core.Application.ViewModels.Administrador.Eleccion
+@model ResultadoEleccionViewModel
+
+@{
+    Layout = "AdminLayout";
+    ViewData["Title"] = "Resultados de Elección";
+}
+
+<div class="page-panel mt-4">
+    <div class="page-hero">
+        <div>
+            <h2>Resultados de @Model.NombreEleccion</h2>
+            <p>Fecha de realización: @Model.FechaRealizacion.ToShortDateString()</p>
+        </div>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="bi bi-arrow-left-circle me-2"></i>Volver
+        </a>
+    </div>
+
+    @foreach (var puesto in Model.ResultadosPorPuesto)
+    {
+        <div class="page-table mb-4">
+            <div class="d-flex justify-content-between align-items-center px-4 pt-4">
+                <h4 class="mb-0">@puesto.NombrePuesto</h4>
+                <span class="pill-badge"><i class="bi bi-bar-chart"></i>@puesto.Candidatos.Count candidatos</span>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Candidato</th>
+                            <th>Partido</th>
+                            <th>Votos</th>
+                            <th>Porcentaje</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var candidato in puesto.Candidatos)
+                        {
+                            <tr>
+                                <td>@candidato.NombreCandidato</td>
+                                <td>@candidato.PartidoSiglas</td>
+                                <td>@candidato.VotosRecibidos</td>
+                                <td>@candidato.Porcentaje %</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,61 @@
+@using Evote365.Core.Application.ViewModels.Administrador.AsignacionPartido
+@using Evote366.Core.Domain.Common.Enums
+@model AsignacionListadoViewModel
+
+@{
+    ViewData["Title"] = "Asignación de Dirigentes Políticos";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="page-panel mt-4">
+    <div class="page-hero">
+        <div>
+            <h2>@ViewData["Title"]</h2>
+            <p>Controle qué dirigente representa a cada partido dentro del sistema.</p>
+        </div>
+        @if (Model.PuedeModificar)
+        {
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-person-plus-fill me-2"></i>Agregar nueva relación
+            </a>
+        }
+    </div>
+
+    @if (!Model.PuedeModificar)
+    {
+        <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>No se pueden modificar relaciones mientras haya una elección activa.
+        </div>
+    }
+
+    <div class="page-table">
+        <div class="table-responsive">
+            <table class="table table-bordered mt-0 mb-0">
+                <thead>
+                    <tr>
+                        <th>Nombre del Dirigente</th>
+                        <th>Siglas del Partido</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Relaciones)
+                    {
+                        <tr>
+                            <td>@item.NombreUsuario</td>
+                            <td>@item.SiglasPartido</td>
+                            <td>
+                                @if (Model.PuedeModificar)
+                                {
+                                    <a asp-action="ConfirmarDesvinculacion" asp-route-id="@item.Id" class="btn btn-danger">
+                                        <i class="bi bi-person-x-fill me-2"></i>Desvincular
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

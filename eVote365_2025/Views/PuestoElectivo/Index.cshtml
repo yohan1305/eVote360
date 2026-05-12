@@ -1,0 +1,57 @@
+﻿@using Evote365.Core.Application.ViewModels.Administrador.PuestoElectivo
+@using Evote366.Core.Domain.Common.Enums
+@model List<PuestoElectivoViewModel>
+@{
+    Layout = "AdminLayout";
+    ViewData["Title"] = "PuestoElectivo";
+}
+
+<section class="page-panel">
+<div class="page-hero">
+    <div>
+        <h1 class="display-6">Puestos Electivos</h1>
+        <p>Define los cargos disponibles dentro del proceso electoral.</p>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12 col-md-3">
+        <a class="btn btn-outline-success" asp-controller="PuestoElectivo" asp-action="Create">
+            <i class="bi bi-file-earmark-plus"></i> Nuevo puesto
+        </a>
+    </div>
+</div>
+
+<div class="row mt-2">
+    @if (Model.Count == 0)
+    {
+        <div class="page-empty">No hay puestos registrados</div>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            <div class="col-12 col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Nombre</h5>
+                        <p class="card-text">@item.Descripcion</p>
+                        <p class="card-subtitle">Estado: @item.Estado</p>
+                        <div class="mt-2">
+                            <a  class="btn btn-outline-warning float-end" asp-controller="PuestoElectivo" asp-action="Edit" asp-route-id="@item.Id">
+                                <i class="bi bi-pencil-square" ></i> Editar 
+                            </a>
+                            <a class="btn btn-outline-danger float-end me-2" asp-controller="PuestoElectivo" asp-action="ToggleEstado" asp-route-id="@item.Id">
+                                <i class="bi bi-toggle-on"></i> @(item.Estado == EstadoEntidad.Activo ? "Desactivar" : "Activar")
+                            </a>
+                            <a class="btn btn-outline-secondary float-end me-2" asp-controller="PuestoElectivo" asp-action="Delete" asp-route-id="@item.Id">
+                                <i class="bi bi-trash"></i> Eliminar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+</section>

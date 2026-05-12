@@ -1,0 +1,27 @@
+@using Evote365.Core.Application.ViewModels.Administrador.PuestoElectivo
+@using Evote366.Core.Domain.Common.Enums
+@model DeletePuestoElectivoViewModel
+@{
+    ViewData["Title"] = "Eliminar puesto electivo";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="confirm-card confirm-danger mt-4 text-center">
+    <div class="icon-wrap mx-auto">
+        <i class="bi bi-trash3"></i>
+    </div>
+    <h2>Eliminar Puesto Electivo</h2>
+    <p class="confirm-copy">Va a eliminar el puesto <strong>@Model.Nombre</strong>. Esta acción debe confirmarse solo si ya no se utilizará en el flujo electoral.</p>
+
+    <form asp-controller="PuestoElectivo" asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div class="form-actions justify-content-center">
+            <a asp-controller="PuestoElectivo" asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle me-2"></i>Cancelar
+            </a>
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-trash me-2"></i>Eliminar
+            </button>
+        </div>
+    </form>
+</div>

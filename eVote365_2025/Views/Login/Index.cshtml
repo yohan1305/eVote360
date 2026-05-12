@@ -1,0 +1,45 @@
+@using Evote365.Core.Application.ViewModels.Login
+@model LoginViewModel
+@{
+    ViewData["Title"] = "Inicio de sesión";
+    Layout = "_Layout";
+    var loginError = ViewData.ModelState[string.Empty]?.Errors.FirstOrDefault()?.ErrorMessage;
+}
+
+<section class="login-card">
+    <div class="text-center mb-4">
+        <h2 class="login-title">Acceder al sistema</h2>
+        <p class="login-subtitle">Ingresa con tu usuario y contraseña para continuar.</p>
+    </div>
+
+    <form asp-action="Index" method="post">
+        <div class="form-group mb-3">
+            <label asp-for="Usuario" class="form-label fw-semibold">Usuario</label>
+            <input asp-for="Usuario" class="form-control" placeholder="Nombre de usuario" />
+            <span asp-validation-for="Usuario" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-4">
+            <label asp-for="Contrasena" class="form-label fw-semibold">Contraseña</label>
+            <input asp-for="Contrasena" class="form-control" type="password" placeholder="Tu contraseña" />
+            <span asp-validation-for="Contrasena" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 py-3">Acceder</button>
+    </form>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    @if (!string.IsNullOrWhiteSpace(loginError))
+    {
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Acceso no permitido',
+                text: '@loginError'
+            });
+        </script>
+    }
+}

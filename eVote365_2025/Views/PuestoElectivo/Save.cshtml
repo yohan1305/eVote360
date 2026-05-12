@@ -1,0 +1,42 @@
+@using Evote365.Core.Application.ViewModels.Administrador.PuestoElectivo
+@using Evote366.Core.Domain.Common.Enums
+@model SavePuestoElectivoViewModel
+@{
+    bool editMode = ViewBag.EditMode ?? false;
+    ViewData["Title"] = "Guardar puesto electivo";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="form-shell mt-4">
+    <div class="form-card">
+        <div class="page-hero mb-4">
+            <div>
+                <h2>@(editMode ? "Editar Puesto Electivo" : "Nuevo Puesto Electivo")</h2>
+                <p class="form-intro">Defina el cargo que participará dentro del proceso electoral y su descripción operativa.</p>
+            </div>
+        </div>
+        <form asp-controller="PuestoElectivo" asp-action="@(editMode ? "Edit" : "Create")" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="row g-3">
+                <div class="col-12">
+                    <label asp-for="Nombre" class="form-label">Nombre</label>
+                    <input class="form-control" asp-for="Nombre" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+                <div class="col-12">
+                    <label asp-for="Descripcion" class="form-label">Descripción</label>
+                    <textarea class="form-control" asp-for="Descripcion" rows="4"></textarea>
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-actions">
+                <a asp-controller="PuestoElectivo" asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left-circle me-2"></i>Volver
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-floppy me-2"></i>Guardar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

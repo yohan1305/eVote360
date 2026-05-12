@@ -1,0 +1,63 @@
+@using Evote365.Core.Application.ViewModels.Administrador.PartidoPolitico
+@using Evote366.Core.Domain.Common.Enums
+@model SavePartidoPoliticoViewModel
+@{
+    Layout = "AdminLayout";
+    ViewData["Title"] = ViewBag.EditMode == true ? "Editar Partido" : "Crear Partido";
+}
+
+<div class="form-shell mt-4">
+    <div class="form-card">
+        <div class="page-hero mb-4">
+            <div>
+                <h2>@ViewData["Title"]</h2>
+                <p class="form-intro">Defina la identidad visual y la información base del partido político.</p>
+            </div>
+        </div>
+
+        <form asp-action="@(ViewBag.EditMode == true ? "Edit" : "Create")" method="post" enctype="multipart/form-data">
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <label asp-for="Nombre" class="form-label"></label>
+                    <input asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="Siglas" class="form-label"></label>
+                    <input asp-for="Siglas" class="form-control" />
+                    <span asp-validation-for="Siglas" class="text-danger"></span>
+                </div>
+                <div class="col-12">
+                    <label asp-for="Descripcion" class="form-label"></label>
+                    <textarea asp-for="Descripcion" class="form-control" rows="4"></textarea>
+                </div>
+                <div class="col-12">
+                    <label asp-for="LogoFile" class="form-label">Logo del partido</label>
+                    <input asp-for="LogoFile" type="file" class="form-control" />
+                    <input type="hidden" asp-for="LogoUrl" />
+                </div>
+                @if (ViewBag.EditMode == true && !string.IsNullOrEmpty(Model.LogoUrl))
+                {
+                    <div class="col-12">
+                        <div class="d-flex align-items-center gap-3 p-3 rounded-4 border bg-light-subtle">
+                            <img src="@Model.LogoUrl" alt="Logo actual" class="brand-mark" />
+                            <div>
+                                <div class="fw-bold">Logo actual</div>
+                                <small class="text-muted">Se mantendrá si no selecciona uno nuevo.</small>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="form-actions">
+                <a class="btn btn-secondary" asp-action="Index">
+                    <i class="bi bi-arrow-left-circle me-2"></i>Volver
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-floppy me-2"></i>Guardar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

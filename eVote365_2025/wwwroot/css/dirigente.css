@@ -1,0 +1,76 @@
+.dirigente-shell .shell-backdrop {
+  background-image:
+    linear-gradient(135deg, rgba(14, 32, 71, 0.78), rgba(27, 99, 170, 0.42)),
+    url("https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=1600&q=80");
+}
+
+.dirigente-navbar {
+  background: rgba(12, 38, 82, 0.76);
+  backdrop-filter: blur(14px);
+}
+
+.dirigente-navbar .nav-link {
+  color: rgba(255, 255, 255, 0.84) !important;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 0.55rem 0.9rem !important;
+}
+
+.dirigente-navbar .nav-link:hover,
+.dirigente-navbar .nav-link:focus {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-dirigente-ghost {
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.btn-dirigente-ghost:hover {
+  color: #133256;
+  background: #fff;
+}
+
+.dirigente-shell .table,
+.dirigente-shell .card,
+.dirigente-shell form,
+.dirigente-shell .alert {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.dirigente-shell h2,
+.dirigente-shell h3,
+.dirigente-shell h4 {
+  color: #fff;
+  font-weight: 800;
+}
+
+.dirigente-shell .table {
+  border: 1px solid rgba(17, 40, 69, 0.08);
+  overflow: hidden;
+}
+
+.dirigente-shell .table thead th {
+  background: #edf4fb;
+  color: #53677b;
+}
+
+.dirigente-shell .table tbody tr:hover {
+  background: rgba(44, 126, 255, 0.04);
+}
+
+.dirigente-shell .card {
+  border-radius: 24px;
+}
+
+.dirigente-shell .page-hero h1,
+.dirigente-shell .page-hero h2,
+.dirigente-shell .page-hero h3,
+.dirigente-shell .page-panel h2,
+.dirigente-shell .page-panel h3,
+.dirigente-shell .form-card h2,
+.dirigente-shell .confirm-card h2 {
+  color: #10233a;
+}

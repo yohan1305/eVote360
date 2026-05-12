@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Evote365</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+</head>
+<body class="login-shell">
+    <div class="shell-backdrop"></div>
+    <header class="shell-header">
+        <nav class="navbar navbar-expand-lg navbar-dark login-navbar">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="/">
+                    <i class="bi bi-shield-lock me-2"></i>Evote365
+                </a>
+                <div class="ms-auto">
+                    <a class="btn btn-login-ghost btn-sm" href="@Url.Action("Index", "Login")">Acceder</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main" class="container py-5">
+        @RenderBody()
+    </main>
+
+    <footer class="shell-footer">
+        <div class="container">
+            <small>© @DateTime.Now.Year - Evote365</small>
+        </div>
+    </footer>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~/js/site.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

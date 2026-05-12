@@ -1,0 +1,53 @@
+@using Evote365.Core.Application.ViewModels.Administrador.Eleccion
+@model CrearEleccionViewModel
+
+@{
+    Layout = "AdminLayout";
+    ViewData["Title"] = "Crear Elección";
+}
+
+<div class="form-shell mt-4">
+    <div class="form-card">
+        <div class="page-hero mb-4">
+            <div>
+                <h2>Crear Nueva Elección</h2>
+                <p class="form-intro">Configure el nombre y la fecha del próximo proceso electoral.</p>
+            </div>
+        </div>
+
+        <form asp-action="Crear" method="post">
+            <div class="row g-3">
+                <div class="col-md-7">
+                    <label asp-for="Nombre" class="form-label">Nombre</label>
+                    <input asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+                <div class="col-md-5">
+                    <label asp-for="FechaRealizacion" class="form-label">Fecha de Realización</label>
+                    <input asp-for="FechaRealizacion" class="form-control" type="date" />
+                    <span asp-validation-for="FechaRealizacion" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left-circle me-2"></i>Volver
+                </a>
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-plus-circle me-2"></i>Crear
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (Model.MensajesError.Any())
+{
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'No se pudo crear la elección',
+            html: '@Html.Raw(string.Join("<br/>", Model.MensajesError.Select(m => System.Net.WebUtility.HtmlEncode(m))))'
+        });
+    </script>
+}

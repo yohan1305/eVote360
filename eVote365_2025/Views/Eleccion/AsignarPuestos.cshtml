@@ -1,0 +1,47 @@
+@using Evote365.Core.Application.ViewModels.Administrador.Eleccion
+@using Evote366.Core.Domain.Common.Enums
+@model AsignacionPuestosViewModel
+
+@{
+    ViewData["Title"] = "Asignar Puestos a Elección";
+    Layout = "AdminLayout";
+}
+
+<div class="page-panel mt-4">
+    <div class="page-hero">
+        <div>
+            <h2>Asignar Puestos a la Elección</h2>
+            <p>Seleccione los cargos que estarán disponibles dentro del proceso electoral activo.</p>
+        </div>
+    </div>
+
+    <form asp-action="AsignarPuestos" method="post">
+        <input type="hidden" asp-for="EleccionId" />
+
+        <div class="choice-grid mb-4">
+            @for (int i = 0; i < Model.PuestosDisponibles.Count; i++)
+            {
+                <label class="choice-card">
+                    <div class="d-flex align-items-start justify-content-between gap-3">
+                        <div>
+                            <h5 class="mb-1">@Model.PuestosDisponibles[i].NombrePuesto</h5>
+                            <p class="text-muted mb-0">Disponible para incluirse en la boleta oficial.</p>
+                        </div>
+                        <input type="checkbox" asp-for="PuestosDisponibles[@i].Seleccionado" class="form-check-input mt-1" />
+                    </div>
+                    <input type="hidden" asp-for="PuestosDisponibles[@i].PuestoId" />
+                    <input type="hidden" asp-for="PuestosDisponibles[@i].NombrePuesto" />
+                </label>
+            }
+        </div>
+
+        <div class="form-actions">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle me-2"></i>Cancelar
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-check2-square me-2"></i>Guardar Asignación
+            </button>
+        </div>
+    </form>
+</div>

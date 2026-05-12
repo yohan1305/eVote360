@@ -1,0 +1,24 @@
+@using Evote365.Core.Application.ViewModels.Administrador.Usuario
+@using Evote366.Core.Domain.Common.Enums
+@model UsuarioViewModel
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+    ViewData["Title"] = "Confirmar Cambio de Estado";
+}
+
+<div class="confirm-card confirm-danger mt-4 text-center">
+    <div class="icon-wrap mx-auto">
+        <i class="bi bi-person-gear"></i>
+    </div>
+    <h2>@ViewData["Title"]</h2>
+    <p class="confirm-copy">Está a punto de @(Model.Estado == EstadoEntidad.Activo ? "desactivar" : "activar") este usuario. Revise que el cambio coincida con el flujo operativo del sistema.</p>
+
+    <div class="form-actions justify-content-center">
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="bi bi-arrow-left-circle me-2"></i>Cancelar
+        </a>
+        <a asp-action="CambiarEstado" asp-route-id="@Model.Id" asp-route-nuevoEstado="@(Model.Estado == EstadoEntidad.Activo ? EstadoEntidad.Inactivo : EstadoEntidad.Activo)" class="btn btn-danger">
+            <i class="bi bi-shield-exclamation me-2"></i>Confirmar
+        </a>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+@using Evote365.Core.Application.ViewModels.Home
+@model AdminHomeViewModel
+
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+    ViewData["Title"] = "Home Administrador";
+}
+
+<div class="page-panel mt-4">
+    <div class="page-hero">
+        <div>
+            <h2 class="mb-1">Resumen Electoral</h2>
+            <p>Consulta rápida de elecciones por año con sus métricas principales.</p>
+        </div>
+    </div>
+
+    <form asp-action="Admin" method="get" class="row g-3 align-items-end mb-4">
+        <div class="col-md-4">
+            <label class="form-label">Año</label>
+            <select class="form-select" name="anio">
+                @foreach (var anio in Model.AniosDisponibles)
+                {
+                    <option value="@anio" selected="@(anio == Model.AnioSeleccionado)">@anio</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-auto">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-funnel me-2"></i>Obtener Resumen Electoral
+            </button>
+        </div>
+    </form>
+
+    @if (!Model.Resumenes.Any())
+    {
+        <div class="page-empty">No hay elecciones registradas para el año seleccionado.</div>
+    }
+    else
+    {
+        <div class="summary-grid mb-4">
+            <div class="metric-card">
+                <div class="metric-label">Elecciones</div>
+                <div class="metric-value">@Model.Resumenes.Count</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Partidos Participantes</div>
+                <div class="metric-value">@Model.Resumenes.Sum(x => x.CantidadPartidos)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Candidatos</div>
+                <div class="metric-value">@Model.Resumenes.Sum(x => x.CantidadCandidatos)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Votos Emitidos</div>
+                <div class="metric-value">@Model.Resumenes.Sum(x => x.TotalVotosEmitidos)</div>
+            </div>
+        </div>
+
+        <div class="page-table">
+            <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                    <thead>
+                        <tr>
+                            <th>Elección</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Partidos</th>
+                            <th>Candidatos</th>
+                            <th>Votantes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Resumenes)
+                        {
+                            <tr>
+                                <td>@item.Nombre</td>
+                                <td>@item.FechaRealizacion.ToShortDateString()</td>
+                                <td>@item.Estado</td>
+                                <td>@item.CantidadPartidos</td>
+                                <td>@item.CantidadCandidatos</td>
+                                <td>@item.TotalVotosEmitidos</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

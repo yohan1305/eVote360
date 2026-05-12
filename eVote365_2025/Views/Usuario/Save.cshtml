@@ -1,0 +1,74 @@
+@using Evote365.Core.Application.ViewModels.Administrador.Usuario
+@using Evote366.Core.Domain.Common.Enums
+@model SaveUsuarioViewModel
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+    ViewData["Title"] = Model.Id == 0 ? "Crear Usuario" : "Editar Usuario";
+}
+
+<div class="form-shell mt-4">
+    <div class="form-card">
+        <div class="page-hero mb-4">
+            <div>
+                <h2>@ViewData["Title"]</h2>
+                <p class="form-intro">Configure el acceso del usuario, su rol y sus credenciales de ingreso.</p>
+            </div>
+        </div>
+
+        <form asp-action="@(Model.Id == 0 ? "Create" : "Edit")" method="post">
+            <input type="hidden" asp-for="PartidoAsignadoId" />
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="Nombre" class="form-label">Nombre</label>
+                    <input asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Apellido" class="form-label">Apellido</label>
+                    <input asp-for="Apellido" class="form-control" />
+                    <span asp-validation-for="Apellido" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="NombreUsuario" class="form-label">Nombre de Usuario</label>
+                    <input asp-for="NombreUsuario" class="form-control" />
+                    <span asp-validation-for="NombreUsuario" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Password" class="form-label">Contraseña</label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ConfirmPassword" class="form-label">Confirmar Contraseña</label>
+                    <input asp-for="ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Rol" class="form-label">Rol</label>
+                    <select asp-for="Rol" class="form-select" asp-items="Html.GetEnumSelectList<RolUsuario>()"></select>
+                    <span asp-validation-for="Rol" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left-circle me-2"></i>Volver
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-person-check me-2"></i>@(Model.Id == 0 ? "Crear" : "Guardar")
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

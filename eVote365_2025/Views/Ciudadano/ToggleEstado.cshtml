@@ -1,0 +1,27 @@
+@using Evote365.Core.Application.ViewModels.Administrador.Ciudadano
+@using Evote366.Core.Domain.Common.Enums
+@model ToggleCiudadanoEstadoViewModel
+@{
+    Layout = "AdminLayout";
+    ViewData["Title"] = Model.Estado == EstadoEntidad.Activo ? "Desactivar Ciudadano" : "Activar Ciudadano";
+}
+
+<div class="confirm-card confirm-danger mt-4 text-center">
+    <div class="icon-wrap mx-auto">
+        <i class="bi bi-person-fill-slash"></i>
+    </div>
+    <h2>@ViewData["Title"]</h2>
+    <p class="confirm-copy">Va a actualizar el estado del ciudadano <strong>@Model.NombreCompleto</strong>. Esta acción impacta su disponibilidad dentro del sistema.</p>
+
+    <div class="form-actions justify-content-center">
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="bi bi-arrow-left-circle me-2"></i>Cancelar
+        </a>
+        <form asp-action="ToggleEstadoConfirmed" method="post" class="d-inline">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-shield-exclamation me-2"></i>Confirmar
+            </button>
+        </form>
+    </div>
+</div>

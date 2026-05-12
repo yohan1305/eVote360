@@ -1,0 +1,88 @@
+@using Evote365.Core.Application.ViewModels.Elector
+@model SeleccionarCandidatoViewModel
+
+@{
+    ViewData["Title"] = "Seleccionar Candidato";
+    Layout = "~/Views/Shared/_LayoutElector.cshtml";
+}
+
+<div class="page-panel mt-4">
+    <div class="page-hero">
+        <div>
+            <h2>Votar por @Model.NombrePuesto</h2>
+            <p>Seleccione una candidatura para registrar su voto de forma segura.</p>
+        </div>
+    </div>
+
+    <form asp-action="SeleccionarCandidato" method="post" id="formVotacion">
+        <input asp-for="PuestoId" type="hidden" />
+        <input asp-for="NombrePuesto" type="hidden" />
+        <input asp-for="CedulaElector" type="hidden" />
+        <input type="hidden" asp-for="PartidoIdSeleccionado" id="hfPartidoId" />
+
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+        <div class="choice-grid">
+            @foreach (var candidato in Model.Candidatos)
+            {
+                <label class="choice-card">
+                    <div class="d-flex justify-content-between gap-3">
+                        <div class="form-check">
+                            <input class="form-check-input"
+                                   type="radio"
+                                   asp-for="CandidatoIdSeleccionado"
+                                   value="@candidato.CandidatoId"
+                                   data-partido="@candidato.PartidoId"
+                                   onclick="document.getElementById('hfPartidoId').value = this.getAttribute('data-partido')" />
+                            <span class="form-check-label fw-bold fs-5">@candidato.NombreCompleto</span>
+                        </div>
+                        <span class="pill-badge">@candidato.PartidoSiglas</span>
+                    </div>
+
+                    <div class="mt-3 d-flex align-items-center gap-3">
+                        @if (!string.IsNullOrWhiteSpace(candidato.FotoUrl))
+                        {
+                            <img src="@candidato.FotoUrl" alt="@candidato.NombreCompleto" class="brand-mark rounded-circle" />
+                        }
+
+                        @if (!string.IsNullOrWhiteSpace(candidato.LogoUrl))
+                        {
+                            <img src="@candidato.LogoUrl" alt="@candidato.PartidoSiglas" class="brand-mark" />
+                        }
+
+                        <div>
+                            <div class="fw-semibold">@candidato.PartidoNombre</div>
+                            <small class="text-muted">Boleta habilitada para @Model.NombrePuesto</small>
+                        </div>
+                    </div>
+                </label>
+            }
+        </div>
+
+        <div class="form-actions">
+            <a asp-action="ListarPuestos" asp-route-cedula="@Model.CedulaElector" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle me-2"></i>Volver
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-check2-square me-2"></i>Registrar voto
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.MensajeError))
+    {
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'No se pudo registrar el voto',
+                text: '@Model.MensajeError'
+            });
+        </script>
+    }
+}
